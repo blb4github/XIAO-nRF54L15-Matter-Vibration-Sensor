@@ -1,10 +1,10 @@
 # Publishing the tested source tree
 
-**The public repository is live, but its initial publication is documentation-only.** The real firmware lives in the developer's working directory on a separate Mac and has not yet been transferred. Publishing a reconstructed implementation would risk departing from the firmware that was actually tested.
+**The 66 source/configuration files have now been imported from the actual tested Mac snapshot (2 November 2026).** This is not reconstructed sample code. The compiled firmware is still withheld because its Matter factory-data sector contains device-specific secrets. A clean build from the public repository remains to be verified.
 
 ## Export and release workflow
 
-A source-and-binary snapshot exporter is available under [`tools/export_tested_snapshot.py`](../tools/export_tested_snapshot.py). It assembles a **private review ZIP** from the tested Mac project and includes `build/merged.hex`, without modifying the device. See the [full review/release workflow](release-process.md). The reviewed firmware **contains** DAC private key, Matter passcode, SPAKE2+ verifier and enable-key fields. Do not publish the ZIP or binary. Use [the checksum-pinned source-only importer](../tools/import_reviewed_snapshot.py) to publish the audited source/configuration files from the reviewed snapshot.
+For provenance and future updates, a source-and-binary snapshot exporter is available under [`tools/export_tested_snapshot.py`](../tools/export_tested_snapshot.py). It assembles a **private review ZIP** from the tested Mac project and includes `build/merged.hex`, without modifying the device. See the [full review/release workflow](release-process.md). The reviewed firmware **contains** DAC private key, Matter passcode, SPAKE2+ verifier and enable-key fields. Do not publish the ZIP or binary. The [checksum-pinned source-only importer](../tools/import_reviewed_snapshot.py) was created to publish audited source/configuration files from the reviewed snapshot; **those files are now present in this repository**.
 
 ## Proposed source layout
 
