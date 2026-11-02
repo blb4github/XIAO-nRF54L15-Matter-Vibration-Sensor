@@ -29,7 +29,7 @@ ditto -x -k "$ROOT/source.zip" "$ROOT"
 APP="$ROOT/$REPO-main"
 BUILD="$ROOT/build"
 LOG="$ROOT/build.log"
-for file in CMakeLists.txt Kconfig.sysbuild sysbuild_internal.conf prj.conf pm_static.yml; do
+for file in CMakeLists.txt Kconfig.sysbuild sysbuild_internal.conf prj.conf pm_static.yml board-root/boards/seeed/xiao_nrf54l15/Kconfig.xiao_nrf54l15 board-root/boards/seeed/xiao_nrf54l15/xiao_nrf54l15_nrf54l15_cpuapp_defconfig; do
     [[ -f "$APP/$file" ]] || { echo "Missing $APP/$file" >&2; exit 1; }
 done
 [[ -f "$APP/board-root/boards/seeed/xiao_nrf54l15/board.yml" ]] || {
