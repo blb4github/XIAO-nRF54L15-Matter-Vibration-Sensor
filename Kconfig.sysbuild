@@ -35,8 +35,9 @@ config DFU_MULTI_IMAGE_PACKAGE_BUILD
 config DFU_MULTI_IMAGE_PACKAGE_APP
 	default y
 
-config PM_EXTERNAL_FLASH_MCUBOOT_SECONDARY
-	default y
+# External flash is not used for MCUboot secondary on this board.
+# Leave PM_EXTERNAL_FLASH_MCUBOOT_SECONDARY to the NCS definition;
+# sysbuild_internal.conf explicitly keeps the secondary slot in internal RRAM.
 
 #### DFU network core configuration
 if SOC_SERIES_NRF53X
