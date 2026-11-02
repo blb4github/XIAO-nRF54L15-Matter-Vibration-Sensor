@@ -8,7 +8,7 @@ Rather than continuously polling the accelerometer, the device reacts to a hardw
 
 **This is a generic vibration-event sensor, not a PIR presence or motion detector.** The first tested use case is detecting letters falling into a mailbox. The receiving Matter controller decides what a detected vibration means for the application.
 
-> **Publication status (2 November 2026):** The **66 original source and configuration files** from the working Mac project have now been published, including Zephyr board definitions and generated ZAP files. The key application sources match the reviewed ZIP. **A clean build from GitHub has not yet been independently tested.** The tested `merged.hex` is **not publicly distributable** as-is: its factory-data region includes Matter attestation and commissioning secrets. A safe public firmware release needs an independently provisioned Matter factory-data strategy.
+> **Publication status (2 November 2026):** The **66 original source and configuration files** from the working Mac project have now been published, including Zephyr board definitions and generated ZAP files. The key application sources match the reviewed ZIP. **A clean build from GitHub has not yet been independently tested. The original `Kconfig.sysbuild` and `sysbuild_internal.conf` were restored from an earlier local project archive; the Mac-based clean build will validate this configuration.** The tested `merged.hex` is **not publicly distributable** as-is: its factory-data region includes Matter attestation and commissioning secrets. A safe public firmware release needs an independently provisioned Matter factory-data strategy.
 
 ## Design
 
@@ -43,6 +43,7 @@ In a real mailbox installation the sensor detects an **A5 envelope** landing on 
 - [Hardware, wiring and battery sensing](docs/hardware.md)
 - [Firmware behavior and Matter data model](docs/firmware.md)
 - [Build, ZAP generation and safe flashing](docs/build-flash.md)
+- [Mac clean-build verification script](tools/verify_clean_build.sh) (uses NCS 3.0.2; no flashing)
 - [Verified tests and outstanding measurements](docs/validation.md)
 - [Publishing the actual tested sources](docs/publishing.md)
 - [Snapshot exporter and firmware release workflow](docs/release-process.md)
