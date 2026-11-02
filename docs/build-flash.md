@@ -22,7 +22,7 @@ The build creates `build/merged.hex` through Zephyr sysbuild/MCUboot.
 
 ## Import the actual tested source tree
 
-The complete tested source and configuration files are included in the reviewed ZIP snapshot created on the development Mac. An importer now validates the exact ZIP SHA-256, checks per-file hashes and source paths, and copies only the source files into this public repository.
+The **66 original source and configuration files have been published** from the reviewed ZIP snapshot created on the development Mac, with the firmware binary excluded. The accompanying importer can validate the ZIP SHA-256, per-file hashes and source paths when repeating the process for a fresh repository.
 
 See [the source importer](../tools/import_reviewed_snapshot.py). Run it **on the development Mac** using the same ZIP that was reviewed:
 
@@ -34,7 +34,7 @@ curl -fLsS \
 python3 /tmp/import_reviewed_snapshot.py --push
 ```
 
-This creates a separate public Git working copy and commits the exact tested app configuration, generated ZAP files, sysbuild files and custom board root. It **never uploads firmware/merged.hex**. You must have Git credentials configured on the development Mac.
+The source import has already been completed; **do not rerun the importer merely to build the project**. The command above is retained as a record of the import workflow for a fresh clone. It never uploads `firmware/merged.hex`.
 
 ## Rebuilding from a clean checkout
 
@@ -67,7 +67,7 @@ The application supplies the correct paths for `DTC_OVERLAY_FILE` so the battery
 
 ## Flashing the working firmware
 
-**At the moment there is no public release binary.** The only identified tested image is the development Mac's `build/merged.hex`; the [review/release workflow](release-process.md) explains how to export and audit it before publication.
+**There is no public release binary.** The tested image on the development Mac includes device-specific Matter attestation/commissioning credentials and is unsuitable for general redistribution. To use these sources on another device, build a device-specific image with a secure provisioning process; see [review/release workflow](release-process.md).
 
 When a verified release asset becomes available, users should first check that the file and board version match the documentation and verify its SHA-256. The example below uses the locally built file.
 
