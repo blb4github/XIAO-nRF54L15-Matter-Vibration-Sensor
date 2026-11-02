@@ -1,12 +1,13 @@
-# Packaging a tested firmware snapshot and preparing a release
+# Source-only release workflow and future firmware distribution
 
 The project separates **reproducible source/configuration** from **flashable firmware artifacts**:
 
 - The Git repository will contain the real app sources, `CMakeLists.txt`, `prj.conf`, `app.overlay`, `pm_static.yml`, ZAP template/generated files, necessary custom board support, and documentation.
-- **GitHub Release assets** are the intended location for a tested and audited firmware file (`merged.hex`) and its SHA-256 checksum.
+- For now, **public releases consist only of tagged source revisions and documentation**. No compiled HEX is distributed.
+- A future optional binary distribution could publish a reviewed application image separately from each device's Matter factory data, but that is **not part of the present release scope**.
 - Zephyr's `build/` directory is **not** part of source control.
 
-**Current state (2 November 2026): original source/configuration files have been published and a clean build from a fresh GitHub download has succeeded. The new image was not flashed or behavior-tested; no public binary is released because generated Matter factory data needs a safe per-device provisioning process.**
+**Decision (2 November 2026): source-only development releases (option 1).** The public source compiles successfully from a clean checkout, but the newly compiled image has not been flashed or field-tested. The original image contains device-specific Matter secrets; it must not be distributed. A universal prebuilt image and automated per-device provisioning (option 2) are deferred pending demonstrated community demand.
 
 ## 1. Prepare a private snapshot on the development Mac
 
@@ -56,18 +57,22 @@ Verify the snapshot corresponds to the firmware running on the board:
 
 Publish only audited, nonsecret sources while preserving applicable upstream license notices. Do not publish Thread operational datasets, Matter setup passcodes, private keys, device-specific DAC private keys, Wi-Fi/network credentials, or logs showing local infrastructure.
 
-## 4. Public firmware release (after audit)
+## 4. Source-only development releases — current policy
 
-Only after verifying the image is suitable for redistribution:
+For now the project follows **option 1**:
 
-1. Create a GitHub Release (e.g. `v0.1.0`) from the audited source commit.
-2. Attach the tested `merged.hex` and a SHA-256 checksum file.
-3. Document the XIAO nRF54L15 Sense target, SDK version, firmware hash, memory layout, limitations and flashing steps.
+1. Publish the reviewed source and board/sysbuild configuration, including ZAP definitions.
+2. Verify that a clean build succeeds for the documented NCS/toolchain version.
+3. Optionally tag a known source revision (e.g. `v0.1.0`) with clear release notes, without attaching a compiled firmware HEX.
+4. Explain that each builder is responsible for generating suitable **device-specific Matter development/test factory data**, flashing and commissioning their own board. A clean compilation does not establish that provisioning and commissioning were tested.
+5. Keep the original prototype firmware and other device-specific credentials private.
 
-**Do not publish a paired device's persistent flash dump.** On-board NVM can contain Matter fabrics, operational keys and Thread credentials. A compiled `merged.hex` is not a flash dump but can still embed factory data and secrets.
+**Option 2 is deferred:** a common, independently flashable application image plus a tested local tool for per-device factory data and onboarding. It can be reconsidered if there is sustained user demand. The provisioning workflow would not necessarily change for every application update when partitions and interfaces stay stable, but each distributed image and supported upgrade path would still need validation.
+
+Do **not** publish the prototype `merged.hex`: its factory-data partition contains DAC private key, commissioning passcode, SPAKE2+ verifier and enable-key material. Do not publish a commissioned device's flash dump either.
 
 ## 5. Flashing notes
 
 See [build-flash.md](build-flash.md) for the tested pyOCD invocation. For the paired test device, `--erase sector` was used with an unchanged partition layout. It worked in local testing but does not guarantee preservation for arbitrary memory-layout changes.
 
-The imported sources are available and **the clean-build procedure has been validated** on the development Mac; no public binary release exists. `build/merged.hex` on the development Mac remains the identified tested image and must not be publicly redistributed unchanged.
+The imported sources are available and **the clean-build procedure has been validated** on the development Mac; no public binary release is planned for the current source-only scope. `build/merged.hex` on the development Mac remains the identified tested image and must not be publicly redistributed unchanged.
