@@ -45,6 +45,7 @@ In a real mailbox installation the sensor detects an **A5 envelope** landing on 
 - [Build, ZAP generation and safe flashing](docs/build-flash.md)
 - [Verified tests and outstanding measurements](docs/validation.md)
 - [Publishing the actual tested sources](docs/publishing.md)
+- [Snapshot exporter and firmware release workflow](docs/release-process.md)
 
 ## Development setup
 
@@ -58,7 +59,7 @@ In a real mailbox installation the sensor detects an **A5 envelope** landing on 
 | Boot / storage | MCUboot; Zephyr ZMS 16 KiB settings |
 | Build output | `build/merged.hex` |
 
-The current project uses a separate custom board root. Exact clean-build parameters will be documented after publishing the tested files.
+The current project uses a separate custom board root. Exact clean-build parameters will be documented after publishing and verifying the tested files. **To capture the authentic source and firmware from the development Mac**, see [the review-bundle export procedure](docs/release-process.md). The release binary will be distributed separately from the source tree, after a privacy/license audit.
 
 ## Limitations and next work
 
