@@ -8,7 +8,7 @@ Rather than continuously polling the accelerometer, the device reacts to a hardw
 
 **This is a generic vibration-event sensor, not a PIR presence or motion detector.** The first tested use case is detecting letters falling into a mailbox. The receiving Matter controller decides what a detected vibration means for the application.
 
-> **Publication status (2 November 2026):** The original tested source/configuration snapshot and additional required Zephyr board/sysbuild files are published. An **independent clean build from a fresh GitHub download has succeeded** on the development Mac (NCS 3.0.2, Zephyr SDK 0.17.0, `FILE_SUFFIX=internal`). The resulting image was **not flashed or tested on hardware**, and binary reproducibility/identity with the installed firmware has not been established. No prebuilt firmware is published: the known original image contains device-specific Matter commissioning and attestation credentials.
+> **Publication status (2 November 2026):** The original tested source/configuration snapshot and additional required Zephyr board/sysbuild files are published. An **independent clean build from a fresh GitHub download has succeeded** on the development Mac (NCS 3.0.2, Zephyr SDK 0.17.0, `FILE_SUFFIX=internal`). The resulting image was **not flashed or tested on hardware**, and binary reproducibility/identity with the installed firmware has not been established. **Release policy:** source-only development releases for now. There is no downloadable prebuilt HEX or universal provisioning tool. The known original image contains device-specific Matter commissioning and attestation credentials. Users who build their own device must handle their own test/development Matter provisioning.
 
 ## Design
 
@@ -60,7 +60,13 @@ In a real mailbox installation the sensor detects an **A5 envelope** landing on 
 | Boot / storage | MCUboot; Zephyr ZMS 16 KiB settings |
 | Build output | `build/merged.hex` |
 
-The custom board root is included under `board-root/`. The [clean-build verification](docs/build-flash.md#clean-build-verification--on-the-development-mac) succeeded on 2 November 2026. The original tested prototype's firmware checksum is recorded in [SOURCE-SNAPSHOT.md](SOURCE-SNAPSHOT.md). No public prebuilt firmware is available because the generated factory-data region needs a per-device provisioning/release strategy.
+The custom board root is included under `board-root/`. The [clean-build verification](docs/build-flash.md#clean-build-verification--on-the-development-mac) succeeded on 2 November 2026. The original tested prototype's firmware checksum is recorded in [SOURCE-SNAPSHOT.md](SOURCE-SNAPSHOT.md). No prebuilt firmware or end-user provisioning tool is planned for the initial source-only development releases. Users build from source using the documented NCS environment and must generate appropriate device-specific Matter development/test credentials.
+
+## Release policy
+
+For now this is a **source-only development project**. A future tag such as `v0.1.0` can identify a tested source revision and its documented build environment; it does **not** imply a published, flash-ready universal HEX. Contributors and builders must generate their own per-device Matter factory data, and should not share compiled images with embedded credentials.
+
+A universal precompiled firmware plus automated per-device provisioning is **deferred unless community demand justifies maintaining and testing that workflow**. Firmware development can continue independently without repackaging a binary release for every source change.
 
 ## Limitations and next work
 
