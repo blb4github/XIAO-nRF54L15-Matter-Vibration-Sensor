@@ -8,7 +8,7 @@ Rather than continuously polling the accelerometer, the device reacts to a hardw
 
 **This is a generic vibration-event sensor, not a PIR presence or motion detector.** The first tested use case is detecting letters falling into a mailbox. The receiving Matter controller decides what a detected vibration means for the application.
 
-> **Publication status:** The actual tested source/configuration snapshot has been reviewed for import using [a checksum-pinned importer](tools/import_reviewed_snapshot.py). Until that import is pushed, this repository remains documentation-only. The tested `merged.hex` is **not publicly distributable** as-is: its factory-data region includes Matter attestation and commissioning secrets. A clean public build/release needs an independently provisioned Matter factory-data strategy.
+> **Publication status (2 November 2026):** The **66 original source and configuration files** from the working Mac project have now been published, including Zephyr board definitions and generated ZAP files. The key application sources match the reviewed ZIP. **A clean build from GitHub has not yet been independently tested.** The tested `merged.hex` is **not publicly distributable** as-is: its factory-data region includes Matter attestation and commissioning secrets. A safe public firmware release needs an independently provisioned Matter factory-data strategy.
 
 ## Design
 
@@ -59,7 +59,7 @@ In a real mailbox installation the sensor detects an **A5 envelope** landing on 
 | Boot / storage | MCUboot; Zephyr ZMS 16 KiB settings |
 | Build output | `build/merged.hex` |
 
-The current project uses a separate custom board root. Exact clean-build parameters will be documented after publishing and verifying the tested files. **To capture the authentic source and firmware from the development Mac**, see [the review-bundle export procedure](docs/release-process.md). The release binary will be distributed separately from the source tree, after a privacy/license audit.
+The custom board root is now included under `board-root/`. See [build and flash instructions](docs/build-flash.md) for the proposed clean build command, which still requires independent validation. The original source snapshot and firmware checksum are recorded in [SOURCE-SNAPSHOT.md](SOURCE-SNAPSHOT.md). There is no public prebuilt firmware; the tested image includes device-specific Matter factory data.
 
 ## Limitations and next work
 
