@@ -20,6 +20,32 @@ cmake --build build
 
 The build creates `build/merged.hex` through Zephyr sysbuild/MCUboot.
 
+## Clean build verification — on the development Mac
+
+The **current GitHub sources can be downloaded without a Git login** and built in a new directory, leaving the existing working `matter_mailbox` project and the commissioned device untouched. A test script was added based on the original successfully used NCS 3.0.2 environment and its `-DFILE_SUFFIX=internal` setting.
+
+The original project ZIP export omitted two sysbuild files; both `Kconfig.sysbuild` and `sysbuild_internal.conf` have now been restored from an earlier development archive (their current working-project versions should still be compared). The script requires both and uses the repository's bundled `board-root/`.
+
+On the Mac:
+
+```bash
+curl -fLsS \
+  https://raw.githubusercontent.com/blb4github/XIAO-nRF54L15-Matter-Vibration-Sensor/main/tools/verify_clean_build.sh \
+  -o /tmp/verify_clean_build.sh
+
+bash /tmp/verify_clean_build.sh
+```
+
+The script:
+
+- Downloads a **fresh main-branch ZIP** into a timestamped folder under `~/Documents/XIAO/`.
+- Uses the existing NCS `/opt/nordic/ncs/v3.0.2` and Nordic toolchain `/opt/nordic/ncs/toolchains/ef4fc6722e`.
+- Runs `west build --sysbuild --pristine=always` for `xiao_nrf54l15/nrf54l15/cpuapp` with `BOARD_ROOT` and `FILE_SUFFIX=internal`.
+- Writes `build.log`, reports the new `merged.hex` SHA-256 and selected effective Kconfig flags.
+- **Never flashes hardware, changes the original project, or publishes the resulting HEX.**
+
+**Status:** the script and missing sysbuild files are published, but the clean build **has not yet been executed on the NCS-equipped Mac**. A successful compile demonstrates that the source builds; functionality, energy behavior and Matter commissioning require separate tests. The output image can include factory-generated Matter credentials, so do not publish or flash it without reviewing that data.
+
 ## Import the actual tested source tree
 
 The **66 original source and configuration files have been published** from the reviewed ZIP snapshot created on the development Mac, with the firmware binary excluded. The accompanying importer can validate the ZIP SHA-256, per-file hashes and source paths when repeating the process for a fresh repository.
@@ -38,14 +64,14 @@ The source import has already been completed; **do not rerun the importer merely
 
 ## Rebuilding from a clean checkout
 
-The project uses a custom Zephyr board root. With **NCS v3.0.2 properly activated** in your terminal, the intended command from the repository root is:
+The project uses a custom Zephyr board root. With **NCS v3.0.2 properly activated**, the corresponding manual command from the repository root is (the script above also sets the verified Nordic toolchain paths and uses `FILE_SUFFIX=internal`):
 
 ```bash
 west build --sysbuild \
   -b xiao_nrf54l15/nrf54l15/cpuapp \
   -d build \
   -p always \
-  -- -DBOARD_ROOT="$PWD/board-root"
+  -- -DBOARD_ROOT="$PWD/board-root" -DFILE_SUFFIX=internal
 ```
 
 **Verification status:** The original project was built successfully from its existing configured build directory, but this exact clean-checkout command has **not yet been independently validated** after importing the source into GitHub. The generated firmware may differ between toolchain/build environments; compare configuration and hashes when validating a release.
