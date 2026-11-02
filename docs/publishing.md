@@ -4,7 +4,7 @@
 
 ## Export and release workflow
 
-A source-and-binary snapshot exporter is available under [`tools/export_tested_snapshot.py`](../tools/export_tested_snapshot.py). It assembles a **private review ZIP** from the tested Mac project and includes `build/merged.hex`, without modifying the device. See the [full review/release workflow](release-process.md). Do not publish the ZIP or firmware before reviewing for factory keys, credentials and upstream licensing.
+A source-and-binary snapshot exporter is available under [`tools/export_tested_snapshot.py`](../tools/export_tested_snapshot.py). It assembles a **private review ZIP** from the tested Mac project and includes `build/merged.hex`, without modifying the device. See the [full review/release workflow](release-process.md). The reviewed firmware **contains** DAC private key, Matter passcode, SPAKE2+ verifier and enable-key fields. Do not publish the ZIP or binary. Use [the checksum-pinned source-only importer](../tools/import_reviewed_snapshot.py) to publish the audited source/configuration files from the reviewed snapshot.
 
 ## Proposed source layout
 
