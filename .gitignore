@@ -1,0 +1,26 @@
+# Zephyr / Nordic build outputs
+build/
+**/build/
+*.elf
+*.hex
+*.bin
+*.map
+*.dts.pre
+*.o
+
+# Editors and local state
+.DS_Store
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+
+# Device secrets, logs and backups require manual review
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+*.zip
+*factory*secrets*
+*thread*dataset*
