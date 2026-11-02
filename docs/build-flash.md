@@ -44,7 +44,7 @@ The script:
 - Writes `build.log`, reports the new `merged.hex` SHA-256 and selected effective Kconfig flags.
 - **Never flashes hardware, changes the original project, or publishes the resulting HEX.**
 
-**Status:** the script and missing sysbuild files are published, but the clean build **has not yet been executed on the NCS-equipped Mac**. A successful compile demonstrates that the source builds; functionality, energy behavior and Matter commissioning require separate tests. The output image can include factory-generated Matter credentials, so do not publish or flash it without reviewing that data.
+**Result (2 November 2026): SUCCESS.** The third clean-build attempt, using the restored Seeed board definitions, completed and produced `build/merged.hex` in `XIAO-nRF54L15-Matter-Vibration-Sensor-clean-20261102-152927/build/`. The log reported `CONFIG_OPENTHREAD_MTD=y`, `CONFIG_OPENTHREAD_MTD_SED=y`, `CONFIG_CHIP_ENABLE_ICD_SUPPORT=y`, `CONFIG_CHIP_ICD_SLOW_POLL_INTERVAL=1000`, and `CONFIG_PM_PARTITION_SIZE_SETTINGS_STORAGE=0x4000`. This verifies **compilation from fresh public sources**, not field behavior or a byte-identical binary. No hardware was flashed, and the generated HEX must not be published or flashed without reviewing its generated Matter credentials.
 
 ### First clean-build attempt and correction (2 November 2026)
 
@@ -52,9 +52,9 @@ The first independent public-source build reached MCUboot Kconfig and then stopp
 
 - `PM_EXTERNAL_FLASH_MCUBOOT_SECONDARY` set to `n`, overridden to `y` by the project's extra sysbuild default.
 - Generic MCUboot template overrides that were incompatible with the selected nRF54L15 configuration: `FPROTECT=y`, `BOOT_MAX_IMG_SECTORS=256`, `MULTITHREADING=n` and `ISR_TABLES_LOCAL_DECLARATION=y`.
-- The subsequent clean build still reported `NRFX_GRTC`, `NRFX_RRAMC` and `FLASH_NRF_FORCE_ALT` dependency warnings. Investigation showed that the exported custom board root **omitted** Seeed's `Kconfig.xiao_nrf54l15` and `xiao_nrf54l15_nrf54l15_cpuapp_defconfig`. Without the former, Zephyr did not select `SOC_NRF54L15_CPUAPP`, causing the Nordic HAL capability symbols to remain off. Both files, plus the companion cpuflpr defconfig, have now been restored from the upstream Seeed board definition in the Zephyr source tree. **This correction still needs a new clean-build test.**
+- The subsequent clean build still reported `NRFX_GRTC`, `NRFX_RRAMC` and `FLASH_NRF_FORCE_ALT` dependency warnings. Investigation showed that the exported custom board root **omitted** Seeed's `Kconfig.xiao_nrf54l15` and `xiao_nrf54l15_nrf54l15_cpuapp_defconfig`. Without the former, Zephyr did not select `SOC_NRF54L15_CPUAPP`, causing the Nordic HAL capability symbols to remain off. Both files, plus the companion cpuflpr defconfig, have now been restored from the upstream Seeed board definition in the Zephyr source tree. **The third clean-build attempt succeeded after this correction.**
 
-Two source-only corrections were committed: remove the extra external-flash default in `Kconfig.sysbuild`, and remove the four invalid forced assignments in `sysbuild/mcuboot/prj.conf`. No application code or memory partition layout was changed. **A second clean build is necessary before claiming success.** The script already creates a new timestamped directory, so simply running it again is safe and does not reuse the failed CMake cache.
+Two source-only corrections were committed: remove the extra external-flash default in `Kconfig.sysbuild`, and remove the four invalid forced assignments in `sysbuild/mcuboot/prj.conf`. No application code or memory partition layout was changed. This sequence was completed in three isolated attempts on 2 November 2026; the final attempt succeeded. The script creates a fresh timestamped directory and does not reuse failed CMake caches.
 
 ## Import the actual tested source tree
 
@@ -84,7 +84,7 @@ west build --sysbuild \
   -- -DBOARD_ROOT="$PWD/board-root" -DFILE_SUFFIX=internal
 ```
 
-**Verification status:** The original project was built successfully from its existing configured build directory, but this exact clean-checkout command has **not yet been independently validated** after importing the source into GitHub. The generated firmware may differ between toolchain/build environments; compare configuration and hashes when validating a release.
+**Verification status:** The corresponding command in `tools/verify_clean_build.sh` was executed successfully on 2 November 2026 in a fresh downloaded copy of the GitHub source. The example above is a manual equivalent and was not separately executed. The resulting image can differ from the installed prototype, including generated factory data; build success alone does not establish firmware binary identity or commissioning safety.
 
 ## Regenerate Matter ZAP files
 
