@@ -13,3 +13,7 @@ Reviewed export ZIP SHA-256: 0e2ded4b1dca70aed41d33279d3876920d0afb282be52be9dcb
 The firmware HEX is NOT included: its factory-data section contains commissioning/attestation material. Do not redistribute the binary without generating a device-neutral and audited provisioning scheme.
 
 Original Nordic LicenseRef-Nordic-5-Clause and Apache-2.0 headers remain intact. The repository MIT license does not relicense third-party code. Some original mailbox-related identifiers remain in the tested source; the firmware is not yet renamed/refactored.
+
+## Clean build verification — 2 November 2026
+
+A clean build from the public `main` branch succeeded on the development Mac using NCS 3.0.2, Zephyr SDK 0.17.0 and `FILE_SUFFIX=internal`, after restoring the required Seeed board Kconfig/defconfig and correcting MCUboot Kconfig overrides. Output: `merged.hex` in a new isolated build directory. The fresh image has not been flashed or tested on hardware. The checksum above refers to the *original installed prototype image*, not necessarily the clean-built image.
