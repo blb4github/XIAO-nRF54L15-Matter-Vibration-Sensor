@@ -9,7 +9,7 @@
 - ZAP **v2024.08.14**.
 - pyOCD with the `nrf54l` target and a supported debug probe.
 
-The *exact clean-build invocation*, including board-root parameters and dependencies, must be extracted from the working project before a full reproducible release can be claimed.
+The *exact clean-build invocation*, including board-root parameters and dependencies, must be extracted from the working project before a full reproducible release can be claimed. The [tested snapshot exporter](release-process.md) captures sources and the locally built binary for review, but does not make the project reproducible by itself.
 
 Building from an already configured build directory was successfully performed with:
 
@@ -34,6 +34,12 @@ cmake --build build
 ```
 
 The application supplies the correct paths for `DTC_OVERLAY_FILE` so the battery ADC channel appears in the generated devicetree.
+
+## Flashing the working firmware
+
+**At the moment there is no public release binary.** The only identified tested image is the development Mac's `build/merged.hex`; the [review/release workflow](release-process.md) explains how to export and audit it before publication.
+
+When a verified release asset becomes available, users should first check that the file and board version match the documentation and verify its SHA-256. The example below uses the locally built file.
 
 ## Flash without deliberately erasing the Matter fabric
 
