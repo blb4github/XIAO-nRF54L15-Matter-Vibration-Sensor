@@ -6,7 +6,7 @@ The project separates **reproducible source/configuration** from **flashable fir
 - **GitHub Release assets** are the intended location for a tested and audited firmware file (`merged.hex`) and its SHA-256 checksum.
 - Zephyr's `build/` directory is **not** part of source control.
 
-**Current state (2 November 2026): original source/configuration files have been published; the compiled firmware image remains private due to device-specific Matter factory data.**
+**Current state (2 November 2026): original source/configuration files have been published and a clean build from a fresh GitHub download has succeeded. The new image was not flashed or behavior-tested; no public binary is released because generated Matter factory data needs a safe per-device provisioning process.**
 
 ## 1. Prepare a private snapshot on the development Mac
 
@@ -50,7 +50,7 @@ Verify the snapshot corresponds to the firmware running on the board:
 - Power Source cluster reports ADC battery voltage and approximate percentage.
 - `CONFIG_CHIP_ENABLE_ICD_SUPPORT=y`, Thread SED, and 1000 ms slow-poll interval.
 - Current ZAP outputs, Power Source implementation, custom board-root, and required build files are complete.
-- A clean build works in the documented NCS version. Do not claim byte-for-byte reproducibility until tested.
+- **Clean build: verified on 2 November 2026** using NCS 3.0.2 and Zephyr SDK 0.17.0, from a fresh GitHub archive. Do not claim byte-for-byte reproducibility or successful device commissioning based on the compile alone.
 
 ## 3. Public source publication
 
@@ -70,4 +70,4 @@ Only after verifying the image is suitable for redistribution:
 
 See [build-flash.md](build-flash.md) for the tested pyOCD invocation. For the paired test device, `--erase sector` was used with an unchanged partition layout. It worked in local testing but does not guarantee preservation for arbitrary memory-layout changes.
 
-The imported sources are available now, but **the clean-build procedure has not yet been validated** and no public binary release exists. `build/merged.hex` on the development Mac remains the identified tested image and must not be publicly redistributed unchanged.
+The imported sources are available and **the clean-build procedure has been validated** on the development Mac; no public binary release exists. `build/merged.hex` on the development Mac remains the identified tested image and must not be publicly redistributed unchanged.
