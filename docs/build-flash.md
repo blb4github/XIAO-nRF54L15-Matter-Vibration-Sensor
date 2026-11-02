@@ -46,6 +46,16 @@ The script:
 
 **Status:** the script and missing sysbuild files are published, but the clean build **has not yet been executed on the NCS-equipped Mac**. A successful compile demonstrates that the source builds; functionality, energy behavior and Matter commissioning require separate tests. The output image can include factory-generated Matter credentials, so do not publish or flash it without reviewing that data.
 
+### First clean-build attempt and correction (2 November 2026)
+
+The first independent public-source build reached MCUboot Kconfig and then stopped with `error: Aborting due to Kconfig warnings`. The log showed:
+
+- `PM_EXTERNAL_FLASH_MCUBOOT_SECONDARY` set to `n`, overridden to `y` by the project's extra sysbuild default.
+- Generic MCUboot template overrides that were incompatible with the selected nRF54L15 configuration: `FPROTECT=y`, `BOOT_MAX_IMG_SECTORS=256`, `MULTITHREADING=n` and `ISR_TABLES_LOCAL_DECLARATION=y`.
+- Additional HAL/Nordic warnings including `NRFX_GRTC`, `NRFX_RRAMC` and `FLASH_NRF_FORCE_ALT`. Their root cause has **not yet been established**.
+
+Two source-only corrections were committed: remove the extra external-flash default in `Kconfig.sysbuild`, and remove the four invalid forced assignments in `sysbuild/mcuboot/prj.conf`. No application code or memory partition layout was changed. **A second clean build is necessary before claiming success.** The script already creates a new timestamped directory, so simply running it again is safe and does not reuse the failed CMake cache.
+
 ## Import the actual tested source tree
 
 The **66 original source and configuration files have been published** from the reviewed ZIP snapshot created on the development Mac, with the firmware binary excluded. The accompanying importer can validate the ZIP SHA-256, per-file hashes and source paths when repeating the process for a fresh repository.
