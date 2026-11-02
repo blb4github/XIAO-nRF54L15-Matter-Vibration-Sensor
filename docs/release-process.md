@@ -35,9 +35,11 @@ The ZIP is a **private review package** containing:
 - **`firmware/merged.hex` copied from the local build**.
 - A JSON manifest with SHA-256 hashes for each file.
 
-Do **not** upload this ZIP directly to the public repository. This package needs a source, binary, licensing and secret review. Some device-specific Matter factory data or development keys may be embedded in binaries as well as source.
+Do **not** upload this ZIP directly to the public repository. This package needs a source, binary, licensing and secret review. The uploaded tested HEX **does** contain a DAC private key, commissioning passcode, SPAKE2+ verifier and enable key in its factory-data partition. It must not be published unchanged.
 
 The exporter does not rebuild, flash or change the working project.
+
+The verified **source-only** importer is available at [tools/import_reviewed_snapshot.py](../tools/import_reviewed_snapshot.py). It uses the exact reviewed ZIP (checksum-pinned) to publish code/configuration without its firmware factory-data region. See [build-flash.md](build-flash.md#import-the-actual-tested-source-tree) for the Mac command.
 
 ## 2. Check the snapshot against the tested installation
 
