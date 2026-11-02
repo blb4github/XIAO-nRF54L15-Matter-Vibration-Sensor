@@ -4,6 +4,12 @@
 
 ## Verified
 
+### Clean-build verification (2 November 2026)
+
+A clean build of the public GitHub source **succeeded** on the development Mac using NCS 3.0.2, Zephyr SDK 0.17.0, `xiao_nrf54l15/nrf54l15/cpuapp`, sysbuild and `FILE_SUFFIX=internal`. The build script confirmed that `merged.hex` was generated. Effective application settings include Thread MTD/SED, Matter ICD, slow poll interval 1000 ms, and 16 KiB settings partition. The fresh build was **not flashed**, so do not interpret this as verification of operation or commissioning of that particular image. No prebuilt public binary has been released.
+
+### Field validation of original prototype
+
 | Test | Observation |
 |---|---|
 | Battery-only operation | Device works and continues to communicate over Matter without USB-C. |
