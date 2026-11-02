@@ -8,7 +8,7 @@ Rather than continuously polling the accelerometer, the device reacts to a hardw
 
 **This is a generic vibration-event sensor, not a PIR presence or motion detector.** The first tested use case is detecting letters falling into a mailbox. The receiving Matter controller decides what a detected vibration means for the application.
 
-> **Source publication status:** This repository currently contains *documentation of the tested implementation*, not yet the complete buildable firmware. The actual tested source tree remains on the developer's Mac. The source files will be added separately and validated with a clean build. Do not interpret this documentation-only snapshot as a release.
+> **Publication status:** The actual tested source/configuration snapshot has been reviewed for import using [a checksum-pinned importer](tools/import_reviewed_snapshot.py). Until that import is pushed, this repository remains documentation-only. The tested `merged.hex` is **not publicly distributable** as-is: its factory-data region includes Matter attestation and commissioning secrets. A clean public build/release needs an independently provisioned Matter factory-data strategy.
 
 ## Design
 
