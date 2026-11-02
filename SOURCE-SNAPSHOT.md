@@ -1,6 +1,6 @@
 # Tested source snapshot - 2 November 2026
 
-Copied byte-for-byte from the reviewed Mac project export.
+Copied byte-for-byte from the reviewed Mac project export and uploaded to the public repository (2 November 2026).
 
 Board: Seeed XIAO nRF54L15 Sense
 
