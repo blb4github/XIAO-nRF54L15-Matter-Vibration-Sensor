@@ -6,7 +6,7 @@ The project separates **reproducible source/configuration** from **flashable fir
 - **GitHub Release assets** are the intended location for a tested and audited firmware file (`merged.hex`) and its SHA-256 checksum.
 - Zephyr's `build/` directory is **not** part of source control.
 
-**Current state (2 November 2026): documentation published; original firmware source and binary still on the development Mac, not yet audited or published.**
+**Current state (2 November 2026): original source/configuration files have been published; the compiled firmware image remains private due to device-specific Matter factory data.**
 
 ## 1. Prepare a private snapshot on the development Mac
 
@@ -39,7 +39,7 @@ Do **not** upload this ZIP directly to the public repository. This package needs
 
 The exporter does not rebuild, flash or change the working project.
 
-The verified **source-only** importer is available at [tools/import_reviewed_snapshot.py](../tools/import_reviewed_snapshot.py). It uses the exact reviewed ZIP (checksum-pinned) to publish code/configuration without its firmware factory-data region. See [build-flash.md](build-flash.md#import-the-actual-tested-source-tree) for the Mac command.
+The verified **source-only** importer used for the published snapshot is available at [tools/import_reviewed_snapshot.py](../tools/import_reviewed_snapshot.py). It uses the exact reviewed ZIP (checksum-pinned) to publish code/configuration without its firmware factory-data region. See [build-flash.md](build-flash.md#import-the-actual-tested-source-tree) for the Mac command.
 
 ## 2. Check the snapshot against the tested installation
 
@@ -70,4 +70,4 @@ Only after verifying the image is suitable for redistribution:
 
 See [build-flash.md](build-flash.md) for the tested pyOCD invocation. For the paired test device, `--erase sector` was used with an unchanged partition layout. It worked in local testing but does not guarantee preservation for arbitrary memory-layout changes.
 
-Until a reviewed release exists, `build/merged.hex` on the development Mac is the only identified tested image.
+The imported sources are available now, but **the clean-build procedure has not yet been validated** and no public binary release exists. `build/merged.hex` on the development Mac remains the identified tested image and must not be publicly redistributed unchanged.
