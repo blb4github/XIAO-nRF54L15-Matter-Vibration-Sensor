@@ -2,6 +2,10 @@
 
 **The public repository is live, but its initial publication is documentation-only.** The real firmware lives in the developer's working directory on a separate Mac and has not yet been transferred. Publishing a reconstructed implementation would risk departing from the firmware that was actually tested.
 
+## Export and release workflow
+
+A source-and-binary snapshot exporter is available under [`tools/export_tested_snapshot.py`](../tools/export_tested_snapshot.py). It assembles a **private review ZIP** from the tested Mac project and includes `build/merged.hex`, without modifying the device. See the [full review/release workflow](release-process.md). Do not publish the ZIP or firmware before reviewing for factory keys, credentials and upstream licensing.
+
 ## Proposed source layout
 
 ```text
