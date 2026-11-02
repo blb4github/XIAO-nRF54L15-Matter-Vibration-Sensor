@@ -1,0 +1,10 @@
+/ {
+    zephyr,user {
+        io-channels = <&adc 7>;
+    };
+};
+
+/* Schakel de meetkring niet automatisch in bij het opstarten. */
+&vbat_pwr {
+    /delete-property/ regulator-boot-on;
+};
