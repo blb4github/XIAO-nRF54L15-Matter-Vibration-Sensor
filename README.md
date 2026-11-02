@@ -12,14 +12,14 @@ Rather than continuously polling the accelerometer, the device reacts to a hardw
 
 ## Design
 
-\`\`\`mermaid
+```mermaid
 flowchart LR
     A[LSM6DS3TR-C accelerometer] -->|INT1 / P0.02| X[XIAO nRF54L15 Sense]
     B[1S LiPo 2000 mAh] --> X
     X -->|Matter Boolean State and Power Source| T[Thread mesh]
     T --> R[Thread border router]
     R --> C[Matter controller]
-\`\`\`
+```
 
 The sensor itself is fully local and requires neither a vendor cloud nor an external motion sensor. Cloud notifications, if desired, are entirely the responsibility of the consuming application.
 
@@ -52,11 +52,11 @@ In a real mailbox installation the sensor detects an **A5 envelope** landing on 
 |---|---|
 | Nordic Connect SDK | **3.0.2** |
 | Board | **XIAO nRF54L15 Sense** |
-| Build target | \`xiao_nrf54l15/nrf54l15/cpuapp\` |
+| Build target | `xiao_nrf54l15/nrf54l15/cpuapp` |
 | Language / framework | C++ / Zephyr / Matter |
 | ZAP | **v2024.08.14** |
 | Boot / storage | MCUboot; Zephyr ZMS 16 KiB settings |
-| Build output | \`build/merged.hex\` |
+| Build output | `build/merged.hex` |
 
 The current project uses a separate custom board root. Exact clean-build parameters will be documented after publishing the tested files.
 
