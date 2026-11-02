@@ -52,7 +52,7 @@ The first independent public-source build reached MCUboot Kconfig and then stopp
 
 - `PM_EXTERNAL_FLASH_MCUBOOT_SECONDARY` set to `n`, overridden to `y` by the project's extra sysbuild default.
 - Generic MCUboot template overrides that were incompatible with the selected nRF54L15 configuration: `FPROTECT=y`, `BOOT_MAX_IMG_SECTORS=256`, `MULTITHREADING=n` and `ISR_TABLES_LOCAL_DECLARATION=y`.
-- Additional HAL/Nordic warnings including `NRFX_GRTC`, `NRFX_RRAMC` and `FLASH_NRF_FORCE_ALT`. Their root cause has **not yet been established**.
+- The subsequent clean build still reported `NRFX_GRTC`, `NRFX_RRAMC` and `FLASH_NRF_FORCE_ALT` dependency warnings. Investigation showed that the exported custom board root **omitted** Seeed's `Kconfig.xiao_nrf54l15` and `xiao_nrf54l15_nrf54l15_cpuapp_defconfig`. Without the former, Zephyr did not select `SOC_NRF54L15_CPUAPP`, causing the Nordic HAL capability symbols to remain off. Both files, plus the companion cpuflpr defconfig, have now been restored from the upstream Seeed board definition in the Zephyr source tree. **This correction still needs a new clean-build test.**
 
 Two source-only corrections were committed: remove the extra external-flash default in `Kconfig.sysbuild`, and remove the four invalid forced assignments in `sysbuild/mcuboot/prj.conf`. No application code or memory partition layout was changed. **A second clean build is necessary before claiming success.** The script already creates a new timestamped directory, so simply running it again is safe and does not reuse the failed CMake cache.
 
